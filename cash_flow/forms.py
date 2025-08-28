@@ -26,20 +26,6 @@ class CashFlowForm(forms.ModelForm):
         if not cleaned.get('created_at'):
             cleaned['created_at'] = timezone.now().date()
 
-        try:
-            self.instance.created_at = cleaned.get('created_at')
-            self.instance.status = cleaned.get('status')
-            self.instance.tx_type = cleaned.get('tx_type')
-            self.instance.category = cleaned.get('category')
-            self.instance.subcategory = cleaned.get('subcategory')
-            self.instance.amount = cleaned.get('amount')
-            self.instance.comment = cleaned.get('comment')
-
-            # вызываем clean модели, если есть кастомная логика
-            self.instance.clean()
-        except forms.ValidationError as e:
-            self.add_error(None, e)
-
         return cleaned
 
 

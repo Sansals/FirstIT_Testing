@@ -62,7 +62,7 @@ class SubCategory(models.Model):
 
 
 class CashFlow(models.Model):
-    #Модель ДДС
+    """Модель ДДС"""
     created_at = models.DateField(default=timezone.localdate) # можно править вручную, от auto_now_add отказываемся для отображения поля в админке
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
     tx_type = models.ForeignKey(TxType, on_delete=models.CASCADE)
