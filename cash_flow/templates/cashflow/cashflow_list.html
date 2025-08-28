@@ -1,16 +1,16 @@
 {% extends "patterns/base.html" %}
-{% block title %}Денежные потоки{% endblock %}
+{% block title %}Движение денежных средств{% endblock %}
 
 {% block content %}
-<h1>Денежные потоки</h1>
+<h1>Движение денежных средств (ДДС)</h1>
 
 <!-- Фильтры -->
 <form method="get" class="row g-2 mb-3">
   <div class="col-md-2">
-    <input type="date" name="start_date" class="form-control" value="{{ request.GET.start_date }}">
+    <input type="date" name="date_from" class="form-control" value="{{ request.GET.date_from }}">
   </div>
   <div class="col-md-2">
-    <input type="date" name="end_date" class="form-control" value="{{ request.GET.end_date }}">
+    <input type="date" name="date_to" class="form-control" value="{{ request.GET.date_to }}">
   </div>
   <div class="col-md-2">
     <select name="status" class="form-select">

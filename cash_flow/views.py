@@ -21,7 +21,7 @@ class CashFlowListView(DictionariesMixin, ListView):
     template_name = 'cashflow/cashflow_list.html'
     paginate_by = 20
 
-    #метод для фильтрации CashFlow
+    # метод для фильтрации CashFlow-объектов
     def get_queryset(self):
         qs = super().get_queryset()
 
@@ -37,7 +37,12 @@ class CashFlowListView(DictionariesMixin, ListView):
 
         # Применяем только те фильтры, которые не пустые
         filter_kwargs = {k: v for k, v in filters.items() if v}
-        qs = qs.filter(**filter_kwargs)
+
+        # подтягиваем зависимые модели посредством select_related для оптимизации SQL-запросов
+        qs = qs.filter(**filter_kwargs).select_related("status",
+                                                       "tx_type",
+                                                       "category",
+                                                       "subcategory")
 
         return qs
 
