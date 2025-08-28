@@ -1,0 +1,24 @@
+{% extends "patterns/base.html" %}
+{% block title %}Удаление записи ДДС{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Удалить запись ДДС #{{ object.pk }}?</h2>
+
+  <ul class="list-group mb-3">
+    <li class="list-group-item"><strong>Дата:</strong> {{ object.created_at }}</li>
+    <li class="list-group-item"><strong>Статус:</strong> {{ object.status.name }}</li>
+    <li class="list-group-item"><strong>Тип:</strong> {{ object.tx_type.name }}</li>
+    <li class="list-group-item"><strong>Категория:</strong> {{ object.category.name }}</li>
+    <li class="list-group-item"><strong>Подкатегория:</strong> {{ object.subcategory.name }}</li>
+    <li class="list-group-item"><strong>Сумма:</strong> {{ object.amount }}</li>
+    <li class="list-group-item"><strong>Комментарий:</strong> {{ object.comment|default:"-" }}</li>
+  </ul>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Удалить</button>
+    <a href="{% url 'cashflow_list' %}" class="btn btn-secondary">Отмена</a>
+  </form>
+</div>
+{% endblock %}

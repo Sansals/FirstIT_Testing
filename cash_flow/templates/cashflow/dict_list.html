@@ -1,0 +1,76 @@
+{% extends "patterns/base.html" %}
+{% block title %}Справочники{% endblock %}
+
+{% block content %}
+<h1>Справочники</h1>
+
+<div class="row">
+  <!-- Статусы -->
+  <div class="col-md-3 mb-3">
+    <h5>Статусы</h5>
+    <ul class="list-group">
+      {% for s in statuses %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ s.name }}
+          <span>
+            <a href="{% url 'status_update' s.pk %}" class="btn btn-sm btn-warning">Изменить</a>
+            <a href="{% url 'status_delete' s.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+          </span>
+        </li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'status_create' %}" class="btn btn-sm btn-success mt-2">Добавить</a>
+  </div>
+
+  <!-- Типы -->
+  <div class="col-md-3 mb-3">
+    <h5>Типы</h5>
+    <ul class="list-group">
+      {% for t in transaction_types %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ t.name }}
+          <span>
+            <a href="{% url 'txtype_update' t.pk %}" class="btn btn-sm btn-warning">Изменить</a>
+            <a href="{% url 'txtype_delete' t.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+          </span>
+        </li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'txtype_create' %}" class="btn btn-sm btn-success mt-2">Добавить</a>
+  </div>
+
+  <!-- Категории -->
+  <div class="col-md-3 mb-3">
+    <h5>Категории</h5>
+    <ul class="list-group">
+      {% for c in categories %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ c.name }} ({{ c.tx_type.name }})
+          <span>
+            <a href="{% url 'category_update' c.pk %}" class="btn btn-sm btn-warning">Изменить</a>
+            <a href="{% url 'category_delete' c.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+          </span>
+        </li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'category_create' %}" class="btn btn-sm btn-success mt-2">Добавить</a>
+  </div>
+
+  <!-- Подкатегории -->
+  <div class="col-md-3 mb-3">
+    <h5>Подкатегории</h5>
+    <ul class="list-group">
+      {% for sc in subcategories %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ sc.name }} ({{ sc.category.name }})
+          <span>
+            <a href="{% url 'subcategory_update' sc.pk %}" class="btn btn-sm btn-warning">Изменить</a>
+            <a href="{% url 'subcategory_delete' sc.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+          </span>
+        </li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'subcategory_create' %}" class="btn btn-sm btn-success mt-2">Добавить</a>
+  </div>
+</div>
+{% endblock %}

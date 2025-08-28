@@ -1,0 +1,75 @@
+{% extends "patterns/base.html" %}
+{% block title %}Денежные потоки{% endblock %}
+
+{% block content %}
+<h1>Денежные потоки</h1>
+
+<!-- Фильтры -->
+<form method="get" class="row g-2 mb-3">
+  <div class="col-md-2">
+    <input type="date" name="start_date" class="form-control" value="{{ request.GET.start_date }}">
+  </div>
+  <div class="col-md-2">
+    <input type="date" name="end_date" class="form-control" value="{{ request.GET.end_date }}">
+  </div>
+  <div class="col-md-2">
+    <select name="status" class="form-select">
+      <option value="">Все статусы</option>
+      {% for s in statuses %}
+        <option value="{{ s.id }}" {% if request.GET.status == s.id|stringformat:"s" %}selected{% endif %}>{{ s.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-2">
+    <select name="tx_type" class="form-select">
+      <option value="">Все типы</option>
+      {% for t in transaction_types %}
+        <option value="{{ t.id }}" {% if request.GET.tx_type == t.id|stringformat:"s" %}selected{% endif %}>{{ t.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-primary w-100">Фильтровать</button>
+  </div>
+  <div class="col-md-2">
+    <a href="{% url 'cashflow_create' %}" class="btn btn-success w-100">Добавить запись</a>
+  </div>
+</form>
+
+<!-- Таблица -->
+<table class="table table-bordered table-sm">
+  <thead class="table-light">
+    <tr>
+      <th>Дата</th>
+      <th>Статус</th>
+      <th>Тип</th>
+      <th>Категория</th>
+      <th>Подкатегория</th>
+      <th>Сумма</th>
+      <th>Комментарий</th>
+      <th>Действия</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in object_list %}
+    <tr>
+      <td>{{ item.created_at }}</td>
+      <td>{{ item.status.name }}</td>
+      <td>{{ item.tx_type.name }}</td>
+      <td>{{ item.category.name }}</td>
+      <td>{{ item.subcategory.name }}</td>
+      <td>{{ item.amount }} ₽</td>
+      <td>{{ item.comment }}</td>
+      <td>
+        <a href="{% url 'cashflow_update' item.id %}" class="btn btn-sm btn-warning">Изменить</a>
+        <a href="{% url 'cashflow_delete' item.id %}" class="btn btn-sm btn-danger">Удалить</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="8" class="text-center">Нет записей</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
